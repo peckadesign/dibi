@@ -13,7 +13,7 @@ namespace Dibi;
 /**
  * DateTime.
  */
-class DateTime extends \DateTimeImmutable
+class DateTime extends \DateTime
 {
 	use Strict;
 
@@ -22,10 +22,11 @@ class DateTime extends \DateTimeImmutable
 	 */
 	public function __construct($time = 'now', \DateTimeZone $timezone = null)
 	{
-		$timezone = $timezone ?: new \DateTimeZone(date_default_timezone_get());
 		if (is_numeric($time)) {
-			$tmp = (new self('@' . $time))->setTimezone($timezone);
-			parent::__construct($tmp->format('Y-m-d H:i:s.u'), $tmp->getTimezone());
+			parent::__construct('@' . $time);
+			$this->setTimezone($timezone ? $timezone : new \DateTimeZone(date_default_timezone_get()));
+		} elseif ($timezone === null) {
+			parent::__construct($time);
 		} else {
 			parent::__construct($time, $timezone);
 		}
