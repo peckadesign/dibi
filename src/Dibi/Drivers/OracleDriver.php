@@ -239,16 +239,28 @@ class OracleDriver implements Dibi\Driver
 	}
 
 
-	public function escapeDate(\DateTimeInterface $value): string
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	public function escapeDate($value): string
 	{
+		if (!$value instanceof \DateTimeInterface) {
+			$value = new Dibi\DateTime($value);
+		}
 		return $this->nativeDate
 			? "to_date('" . $value->format('Y-m-d') . "', 'YYYY-mm-dd')"
 			: $value->format('U');
 	}
 
 
-	public function escapeDateTime(\DateTimeInterface $value): string
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	public function escapeDateTime($value): string
 	{
+		if (!$value instanceof \DateTimeInterface) {
+			$value = new Dibi\DateTime($value);
+		}
 		return $this->nativeDate
 			? "to_date('" . $value->format('Y-m-d G:i:s') . "', 'YYYY-mm-dd hh24:mi:ss')"
 			: $value->format('U');

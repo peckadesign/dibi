@@ -217,14 +217,26 @@ class SqlsrvDriver implements Dibi\Driver
 	}
 
 
-	public function escapeDate(\DateTimeInterface $value): string
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	public function escapeDate($value): string
 	{
+		if (!$value instanceof \DateTimeInterface) {
+			$value = new Dibi\DateTime($value);
+		}
 		return $value->format("'Y-m-d'");
 	}
 
 
-	public function escapeDateTime(\DateTimeInterface $value): string
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	public function escapeDateTime($value): string
 	{
+		if (!$value instanceof \DateTimeInterface) {
+			$value = new Dibi\DateTime($value);
+		}
 		return 'CONVERT(DATETIME2(7), ' . $value->format("'Y-m-d H:i:s.u'") . ')';
 	}
 

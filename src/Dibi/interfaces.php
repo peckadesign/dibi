@@ -87,9 +87,15 @@ interface Driver
 
 	function escapeBool(bool $value): string;
 
-	function escapeDate(\DateTimeInterface $value): string;
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	function escapeDate($value): string;
 
-	function escapeDateTime(\DateTimeInterface $value): string;
+	/**
+	 * @param  \DateTimeInterface|string|int  $value
+	 */
+	function escapeDateTime($value): string;
 
 	function escapeDateInterval(\DateInterval $value): string;
 
